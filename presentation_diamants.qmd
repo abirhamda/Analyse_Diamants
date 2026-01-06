@@ -1,0 +1,95 @@
+---
+ Optionnel : Utilisez l'éditeur visuel de RStudio pour éviter bugs
+
+
+title: "Analyse Descriptive des Diamants : Observations et Insights"
+subtitle: "Projet R & Quarto - Dataset Diamonds"
+author: "Abir Hamda"
+date: "Janvier 2026"
+format: 
+  revealjs:
+    theme: sky  # Thème professionnel et beau (bleu clair, moderne)
+    webr:
+  packages: ['ggplot2', 'dplyr', 'corrplot', 'RColorBrewer']  # Ajoutez
+    ColorBrewer si vous utilisez brewer.pal
+  autoload-packages: true  # Force le chargement automatique
+  cell-options:
+    autorun: false  # Évite exécution auto pendant render local
+editor: visual  # Optionnel : Utilisez l'éditeur visuel de RStudio pour éviter bugs
+
+    transition: slide  # Transitions fluides entre slides
+    background-transition: fade  # Fondu pour les fonds
+    self-contained: true  # Tout inclus dans un seul HTML pour partage facile
+    logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0f/Diamond_icon.svg/512px-Diamond_icon.svg.png"  # Logo diamant (optionnel, remplacez par votre image)
+    footer: "Projet Analyse de Données | Abir Hamda"
+webr:
+  packages: ['ggplot2', 'dplyr', 'corrplot']  # Pour interactivité R dans le navigateur
+---
+
+## Introduction au Projet {background-color="#E0F7FA"}
+::: {.incremental}
+- **Objectif** : Analyser descriptivement le dataset "diamonds" (53 940 observations, 10 variables).
+- **Dataset** : Inclus dans ggplot2 (R). Variables clés : carat (poids), price (prix), cut (qualité), color, clarity, dimensions.
+- **Outils** : R pour l'analyse, Quarto pour le rapport interactif.
+- **Observations principales** : Le prix dépend fortement du carat ; meilleure qualité = prix plus élevé.
+:::
+
+## Chargement des Données {background-color="#B3E5FC"}
+```{webr-r}
+library(ggplot2)
+library(dplyr)
+library(corrplot)
+
+data(diamonds)  # Chargement du dataset
+head(diamonds)  # Aperçu des premières lignes
+str(diamonds)   # Structure : 53 940 obs., 10 variables
+dim(diamonds)   # Dimensions
+---
+
+Statistiques Sommaires {background-color="#81D4FA"}
+
+```{summary(diamonds)  # Stats globales}
+
+# Stats groupées par 'cut'
+diamonds_summary <- diamonds %>%
+  group_by(cut) %>%
+  summarise(
+    Nombre = n(),
+    Prix_Moyen = mean(price),
+    Prix_Médian = median(price),
+    Carat_Moyen = mean(carat),
+    Écart_Type_Prix = sd(price)
+  ) %>%
+  arrange(desc(Prix_Moyen))
+diamonds_summary  # Tableau interactif
+```
+
+Observation : Prix moyen : \~3932 USD. Diamants "Fair" ont le prix moyen le plus élevé malgré moins de quantité –
+
+Distribution des Prix (Histogramme) {background-color="#4FC3F7"}
+
+```{r}
+ggplot(diamonds, aes(x = price, fill = ..count..)) +
+  geom_histogram(bins = 50, color = "black") +
+  scale_fill_gradient(low = "lightblue", high = "darkblue") +
+  labs(title = "Distribution des Prix des Diamants", x = "Prix (USD)", y = "Fréquence") +
+  theme_minimal(base_size = 14)  # Taille police pro
+```
+
+Observation : Distribution asymétrique droite (skewed) – beaucoup de diamants bon marché (\<5000 USD), quelques-uns très chers.
+
+Prix vs Carat (Scatterplot) {background-color="#29B6F6"}
+
+```{r}
+# Échantillon pour clarté (overplotting)
+diamonds_sample <- diamonds %>% sample_n(5000)
+
+ggplot(diamonds_sample, aes(x = carat, y = price, color = cut)) +
+  geom_point(alpha = 0.5, size = 2) +
+  geom_smooth(method = "lm", se = FALSE) +  # Tendance linéaire
+  scale_color_brewer(palette = "Set1") +  # Couleurs pro
+  labs(title = "Relation Prix vs Carat par Qualité", x = "Carat", y = "Prix (USD)") +
+  theme_minimal(base_size = 14)
+```
+
+Observation : Forte corrélation positive (r \~ 0.92). Meilleure cut (Ideal) tend à avoir des prix plus stables.
