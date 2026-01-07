@@ -7,9 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Abir Hamda">
-<meta name="dcterms.date" content="2026-01-01">
+<meta name="dcterms.date" content="2026-01-07">
 
-<title>Analyse Descriptive du Dataset Diamonds : Les Facteurs qui Font Briller le Prix 💎</title>
+<title>Analyse des Diamants : Les Facteurs du Prix 💎</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -72,8 +72,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="rapport_diamants_files/libs/bootstrap/bootstrap.min.js"></script>
 <link href="rapport_diamants_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="rapport_diamants_files/libs/bootstrap/bootstrap-4d7f0bce1131f3e5f9547cd857cfbfc8.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<style>html{ scroll-behavior: smooth; }</style>
 
 
+<link rel="stylesheet" href="styles.css">
 </head>
 
 <body class="quarto-light">
@@ -81,21 +83,39 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
 <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
   <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">Table of contents</h2>
+    <h2 id="toc-title">📋 Sommaire</h2>
    
   <ul>
-  <li><a href="#introduction-et-objectifs-du-projet" id="toc-introduction-et-objectifs-du-projet" class="nav-link active" data-scroll-target="#introduction-et-objectifs-du-projet">Introduction et Objectifs du Projet</a></li>
-  <li><a href="#présentation-des-4c-du-diamant" id="toc-présentation-des-4c-du-diamant" class="nav-link" data-scroll-target="#présentation-des-4c-du-diamant">Présentation des 4C du Diamant</a></li>
-  <li><a href="#chargement-et-aperçu-des-données" id="toc-chargement-et-aperçu-des-données" class="nav-link" data-scroll-target="#chargement-et-aperçu-des-données">Chargement et Aperçu des Données</a>
+  <li><a href="#les-4c-des-diamants" id="toc-les-4c-des-diamants" class="nav-link active" data-scroll-target="#les-4c-des-diamants"><span class="header-section-number">1</span> 💎 Les 4C des Diamants</a>
   <ul class="collapse">
-  <li><a href="#statistiques-par-qualité-de-coupe-cut" id="toc-statistiques-par-qualité-de-coupe-cut" class="nav-link" data-scroll-target="#statistiques-par-qualité-de-coupe-cut">Statistiques par Qualité de Coupe (Cut)</a></li>
+  <li><a href="#diamants-analysés" id="toc-diamants-analysés" class="nav-link" data-scroll-target="#diamants-analysés"><span class="header-section-number">1.0.1</span> 53 940 diamants analysés</a></li>
   </ul></li>
-  <li><a href="#visualisations-exploratoires" id="toc-visualisations-exploratoires" class="nav-link" data-scroll-target="#visualisations-exploratoires">Visualisations Exploratoires</a>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link" data-scroll-target="#introduction">Introduction</a></li>
+  <li><a href="#aperçu-des-données" id="toc-aperçu-des-données" class="nav-link" data-scroll-target="#aperçu-des-données"><span class="header-section-number">2</span> Aperçu des Données</a>
   <ul class="collapse">
-  <li><a href="#distribution-du-prix-et-du-carat" id="toc-distribution-du-prix-et-du-carat" class="nav-link" data-scroll-target="#distribution-du-prix-et-du-carat">Distribution du Prix et du Carat</a></li>
-  <li><a href="#comparaisons-par-catégories" id="toc-comparaisons-par-catégories" class="nav-link" data-scroll-target="#comparaisons-par-catégories">Comparaisons par Catégories</a></li>
+  <li><a href="#structure-du-dataset" id="toc-structure-du-dataset" class="nav-link" data-scroll-target="#structure-du-dataset"><span class="header-section-number">2.1</span> Structure du Dataset</a></li>
+  <li><a href="#statistiques-descriptives" id="toc-statistiques-descriptives" class="nav-link" data-scroll-target="#statistiques-descriptives"><span class="header-section-number">2.2</span> Statistiques Descriptives</a></li>
   </ul></li>
-  <li><a href="#insights-et-conclusion" id="toc-insights-et-conclusion" class="nav-link" data-scroll-target="#insights-et-conclusion">Insights et Conclusion</a></li>
+  <li><a href="#le-carat-facteur-dominant-du-prix" id="toc-le-carat-facteur-dominant-du-prix" class="nav-link" data-scroll-target="#le-carat-facteur-dominant-du-prix"><span class="header-section-number">3</span> Le Carat : Facteur Dominant du Prix</a>
+  <ul class="collapse">
+  <li><a href="#relation-prix-vs-carat" id="toc-relation-prix-vs-carat" class="nav-link" data-scroll-target="#relation-prix-vs-carat"><span class="header-section-number">3.1</span> Relation Prix vs Carat</a></li>
+  <li><a href="#distribution-du-carat" id="toc-distribution-du-carat" class="nav-link" data-scroll-target="#distribution-du-carat"><span class="header-section-number">3.2</span> Distribution du Carat</a></li>
+  </ul></li>
+  <li><a href="#influence-des-autres-c" id="toc-influence-des-autres-c" class="nav-link" data-scroll-target="#influence-des-autres-c"><span class="header-section-number">4</span> Influence des Autres “C”</a>
+  <ul class="collapse">
+  <li><a href="#qualité-de-coupe-cut" id="toc-qualité-de-coupe-cut" class="nav-link" data-scroll-target="#qualité-de-coupe-cut"><span class="header-section-number">4.1</span> Qualité de Coupe (Cut)</a></li>
+  <li><a href="#couleur-color" id="toc-couleur-color" class="nav-link" data-scroll-target="#couleur-color"><span class="header-section-number">4.2</span> Couleur (Color)</a></li>
+  <li><a href="#pureté-clarity" id="toc-pureté-clarity" class="nav-link" data-scroll-target="#pureté-clarity"><span class="header-section-number">4.3</span> Pureté (Clarity)</a></li>
+  </ul></li>
+  <li><a href="#analyses-approfondies" id="toc-analyses-approfondies" class="nav-link" data-scroll-target="#analyses-approfondies"><span class="header-section-number">5</span> Analyses Approfondies</a>
+  <ul class="collapse">
+  <li><a href="#top-10-diamants-les-plus-chers" id="toc-top-10-diamants-les-plus-chers" class="nav-link" data-scroll-target="#top-10-diamants-les-plus-chers"><span class="header-section-number">5.1</span> Top 10 Diamants les Plus Chers</a></li>
+  <li><a href="#matrice-de-corrélation" id="toc-matrice-de-corrélation" class="nav-link" data-scroll-target="#matrice-de-corrélation"><span class="header-section-number">5.2</span> Matrice de Corrélation</a></li>
+  <li><a href="#top-combinaisons-cut-color" id="toc-top-combinaisons-cut-color" class="nav-link" data-scroll-target="#top-combinaisons-cut-color"><span class="header-section-number">5.3</span> Top Combinaisons Cut + Color</a></li>
+  </ul></li>
+  <li><a href="#conclusions-recommandations" id="toc-conclusions-recommandations" class="nav-link" data-scroll-target="#conclusions-recommandations"><span class="header-section-number">6</span> Conclusions &amp; Recommandations</a></li>
+  <li><a href="#merci-pour-votre-attention" id="toc-merci-pour-votre-attention" class="nav-link" data-scroll-target="#merci-pour-votre-attention"><span class="header-section-number">7</span> Merci pour votre attention ! 💎</a></li>
+  
   </ul>
 </nav>
 </div>
@@ -103,7 +123,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<div class="quarto-title-block"><div><h1 class="title">Analyse Descriptive du Dataset Diamonds : Les Facteurs qui Font Briller le Prix 💎</h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
+<div class="quarto-title-block"><div><h1 class="title">Analyse des Diamants : Les Facteurs du Prix 💎</h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li><li><hr class="dropdown-divider"></li><li><a id="quarto-view-source" class="dropdown-item" href="javascript:void(0)" role="button">View Source</a></li></ul></div></div>
+<p class="subtitle lead">Projet d’Analyse Descriptive</p>
 </div>
 
 
@@ -120,7 +141,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">2026</p>
+      <p class="date">07 January 2026</p>
     </div>
   </div>
   
@@ -132,122 +153,664 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
+<section id="les-4c-des-diamants" class="level1 hero-banner" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 60px 20px; text-align: center; border-radius: 15px; margin-bottom: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.2);" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> 💎 Les 4C des Diamants</h1>
+<p><strong>Carat</strong> • <strong>Cut</strong> • <strong>Color</strong> • <strong>Clarity</strong></p>
+<section id="diamants-analysés" class="level3" data-number="1.0.1">
+<h3 data-number="1.0.1" class="anchored" data-anchor-id="diamants-analysés"><span class="header-section-number">1.0.1</span> 53 940 diamants analysés</h3>
+<p><em>Découvrez les insights pour comprendre les facteurs du prix</em></p>
+</section>
+</section>
+<section id="introduction" class="level1 unnumbered">
+<h1 class="unnumbered">Introduction</h1>
+<p>Ce rapport présente une analyse descriptive approfondie du dataset <strong>diamonds</strong>, qui contient les caractéristiques et prix de <strong>53 940 diamants</strong>.</p>
+<p><strong>Objectifs :</strong></p>
+<ul>
+<li>Identifier les facteurs influençant le prix</li>
+<li>Analyser les relations entre variables</li>
+<li>Fournir des insights pour l’optimisation du pricing</li>
+</ul>
 <hr>
-<section id="introduction-et-objectifs-du-projet" class="level2">
-<h2 class="anchored" data-anchor-id="introduction-et-objectifs-du-projet">Introduction et Objectifs du Projet</h2>
-<p>Ce projet présente une <strong>analyse descriptive complète</strong> du dataset <strong>diamonds</strong> (inclus dans R via ggplot2), contenant <strong>53 940 diamants</strong> avec 10 variables :</p>
+</section>
+<section id="aperçu-des-données" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> Aperçu des Données</h1>
+<section id="structure-du-dataset" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="structure-du-dataset"><span class="header-section-number">2.1</span> Structure du Dataset</h2>
+<div class="cell" data-layout-align="center">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Afficher la structure</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(diamonds)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 53,940
+Columns: 10
+$ carat   &lt;dbl&gt; 0.23, 0.21, 0.23, 0.29, 0.31, 0.24, 0.24, 0.26, 0.22, 0.23, 0.…
+$ cut     &lt;ord&gt; Ideal, Premium, Good, Premium, Good, Very Good, Very Good, Ver…
+$ color   &lt;ord&gt; E, E, E, I, J, J, I, H, E, H, J, J, F, J, E, E, I, J, J, J, I,…
+$ clarity &lt;ord&gt; SI2, SI1, VS1, VS2, SI2, VVS2, VVS1, SI1, VS2, VS1, SI1, VS1, …
+$ depth   &lt;dbl&gt; 61.5, 59.8, 56.9, 62.4, 63.3, 62.8, 62.3, 61.9, 65.1, 59.4, 64…
+$ table   &lt;dbl&gt; 55, 61, 65, 58, 58, 57, 57, 55, 61, 61, 55, 56, 61, 54, 62, 58…
+$ price   &lt;int&gt; 326, 326, 327, 334, 335, 336, 336, 337, 337, 338, 339, 340, 34…
+$ x       &lt;dbl&gt; 3.95, 3.89, 4.05, 4.20, 4.34, 3.94, 3.95, 4.07, 3.87, 4.00, 4.…
+$ y       &lt;dbl&gt; 3.98, 3.84, 4.07, 4.23, 4.35, 3.96, 3.98, 4.11, 3.78, 4.05, 4.…
+$ z       &lt;dbl&gt; 2.43, 2.31, 2.31, 2.63, 2.75, 2.48, 2.47, 2.53, 2.49, 2.39, 2.…</code></pre>
+</div>
+</div>
+</section>
+<section id="statistiques-descriptives" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="statistiques-descriptives"><span class="header-section-number">2.2</span> Statistiques Descriptives</h2>
+<div class="cell" data-layout-align="center">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Statistiques du prix</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(diamonds<span class="sc">$</span>price)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+    326     950    2401    3933    5324   18823 </code></pre>
+</div>
+</div>
+<div class="callout callout-style-default callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>📊 Statistiques Clés du Prix
+</div>
+</div>
+<div class="callout-body-container callout-body">
 <ul>
-<li><strong>price</strong> : Prix en dollars US (variable cible)</li>
-<li><strong>carat</strong> : Poids du diamant</li>
-<li><strong>cut</strong> : Qualité de la taille (Fair, Good, Very Good, Premium, Ideal)</li>
-<li><strong>color</strong> : Couleur (D = meilleure/incolore à J = pire)</li>
-<li><strong>clarity</strong> : Pureté (I1 pire à IF meilleure)</li>
-<li>Dimensions : depth, table, x, y, z</li>
+<li><strong>Prix Moyen :</strong> $3,932.80</li>
+<li><strong>Prix Médian :</strong> $2,401</li>
+<li><strong>Prix Maximum :</strong> $18,823</li>
+<li><strong>Écart-Type :</strong> $3,989.44</li>
 </ul>
-<p><strong>Objectifs</strong> : - Explorer la distribution des variables - Identifier les facteurs influençant le prix - Visualiser les relations clés - Tirer des insights business (ex. pour la joaillerie)</p>
-<p>Le rapport est <strong>interactif</strong> : modifiez et exécutez le code R directement dans votre navigateur !</p>
+</div>
+</div>
+<div class="cell" data-layout-align="center">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Tableau récapitulatif par Cut</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>diamonds_summary <span class="ot">&lt;-</span> diamonds <span class="sc">%&gt;%</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(cut) <span class="sc">%&gt;%</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">Nombre =</span> <span class="fu">n</span>(),</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">`</span><span class="at">Prix Moyen</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">dollar</span>(<span class="fu">mean</span>(price)),</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">`</span><span class="at">Prix Médian</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">dollar</span>(<span class="fu">median</span>(price)),</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">`</span><span class="at">Carat Moyen</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">round</span>(<span class="fu">mean</span>(carat), <span class="dv">2</span>)</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(<span class="st">`</span><span class="at">Prix Moyen</span><span class="st">`</span>))</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(diamonds_summary, <span class="at">caption =</span> <span class="st">"Statistiques par Qualité de Coupe"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>Statistiques par Qualité de Coupe</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">cut</th>
+<th style="text-align: right;">Nombre</th>
+<th style="text-align: left;">Prix Moyen</th>
+<th style="text-align: left;">Prix Médian</th>
+<th style="text-align: right;">Carat Moyen</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Premium</td>
+<td style="text-align: right;">13791</td>
+<td style="text-align: left;">$4,584.26</td>
+<td style="text-align: left;">$3,185</td>
+<td style="text-align: right;">0.89</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Fair</td>
+<td style="text-align: right;">1610</td>
+<td style="text-align: left;">$4,358.76</td>
+<td style="text-align: left;">$3,282</td>
+<td style="text-align: right;">1.05</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Very Good</td>
+<td style="text-align: right;">12082</td>
+<td style="text-align: left;">$3,981.76</td>
+<td style="text-align: left;">$2,648</td>
+<td style="text-align: right;">0.81</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Good</td>
+<td style="text-align: right;">4906</td>
+<td style="text-align: left;">$3,928.86</td>
+<td style="text-align: left;">$3,050.50</td>
+<td style="text-align: right;">0.85</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Ideal</td>
+<td style="text-align: right;">21551</td>
+<td style="text-align: left;">$3,457.54</td>
+<td style="text-align: left;">$1,810</td>
+<td style="text-align: right;">0.70</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<hr>
 </section>
-<section id="présentation-des-4c-du-diamant" class="level2">
-<h2 class="anchored" data-anchor-id="présentation-des-4c-du-diamant">Présentation des 4C du Diamant</h2>
-<p>Les diamants sont évalués selon les <strong>4C</strong> (Carat, Cut, Color, Clarity).</p>
-<p><grok-card data-id="47f212" data-type="image_card" data-arg-size="LARGE"></grok-card></p>
-<p><grok-card data-id="ddeda8" data-type="image_card" data-arg-size="LARGE"></grok-card></p>
-<p><grok-card data-id="a7d28b" data-type="image_card" data-arg-size="LARGE"></grok-card></p>
-<p><grok-card data-id="0afa8f" data-type="image_card" data-arg-size="LARGE"></grok-card></p>
 </section>
-<section id="chargement-et-aperçu-des-données" class="level2">
-<h2 class="anchored" data-anchor-id="chargement-et-aperçu-des-données">Chargement et Aperçu des Données</h2>
-<pre class="{webr-r}"><code>library(ggplot2)
-library(dplyr)
-library(corrplot)
-library(gridExtra)
-
-data(diamonds)
-
-# Aperçu
-head(diamonds)
-str(diamonds)
-dim(diamonds)  # 53940 observations, 10 variables
----
-
-## Statistiques Descriptives Globales
-
-```{summary(diamonds)}</code></pre>
-<p><strong>Observations clés</strong> :</p>
+<section id="le-carat-facteur-dominant-du-prix" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> Le Carat : Facteur Dominant du Prix</h1>
+<p>Le <strong>carat</strong> (poids) est la variable ayant l’impact le plus significatif sur le prix.</p>
+<section id="relation-prix-vs-carat" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="relation-prix-vs-carat"><span class="header-section-number">3.1</span> Relation Prix vs Carat</h2>
+<div class="cell" data-layout-align="center">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(diamonds_sample, <span class="fu">aes</span>(<span class="at">x =</span> carat, <span class="at">y =</span> price)) <span class="sc">+</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.4</span>, <span class="at">color =</span> <span class="st">"#667eea"</span>, <span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"loess"</span>, <span class="at">color =</span> <span class="st">"#764ba2"</span>, <span class="at">linewidth =</span> <span class="fl">1.5</span>, <span class="at">se =</span> <span class="cn">TRUE</span>) <span class="sc">+</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> <span class="fu">dollar_format</span>()) <span class="sc">+</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Relation entre Prix et Carat"</span>,</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="fu">paste</span>(<span class="st">"Corrélation:"</span>, <span class="fu">round</span>(<span class="fu">cor</span>(diamonds<span class="sc">$</span>price, diamonds<span class="sc">$</span>carat), <span class="dv">3</span>)),</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Carat (poids)"</span>,</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Prix (USD)"</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">13</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="rapport_diamants_files/figure-html/prix-carat-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-important no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>🔍 Insight Clé
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>La corrélation entre <strong>Prix</strong> et <strong>Carat</strong> est de <strong>0.922</strong>, ce qui indique une relation <strong>très forte et positive</strong>.</p>
+</div>
+</div>
+</section>
+<section id="distribution-du-carat" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="distribution-du-carat"><span class="header-section-number">3.2</span> Distribution du Carat</h2>
+<div class="cell" data-layout-align="center">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(diamonds, <span class="fu">aes</span>(<span class="at">x =</span> carat)) <span class="sc">+</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">50</span>, <span class="at">fill =</span> <span class="st">"#ff9800"</span>, <span class="at">color =</span> <span class="st">"white"</span>, <span class="at">alpha =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">median</span>(diamonds<span class="sc">$</span>carat), </span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>             <span class="at">linetype =</span> <span class="st">"dashed"</span>, <span class="at">color =</span> <span class="st">"red"</span>, <span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">x =</span> <span class="fu">median</span>(diamonds<span class="sc">$</span>carat) <span class="sc">+</span> <span class="fl">0.3</span>, <span class="at">y =</span> <span class="dv">8000</span>, </span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>           <span class="at">label =</span> <span class="fu">paste</span>(<span class="st">"Médiane ="</span>, <span class="fu">round</span>(<span class="fu">median</span>(diamonds<span class="sc">$</span>carat), <span class="dv">2</span>)), </span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>           <span class="at">color =</span> <span class="st">"red"</span>, <span class="at">size =</span> <span class="dv">5</span>) <span class="sc">+</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Distribution du Poids des Diamants"</span>,</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"Pics observés autour de 0.3, 0.5, 1.0 et 1.5 carats"</span>,</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Carat"</span>,</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Fréquence"</span></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="rapport_diamants_files/figure-html/dist-carat-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+<hr>
+</section>
+</section>
+<section id="influence-des-autres-c" class="level1" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span> Influence des Autres “C”</h1>
+<section id="qualité-de-coupe-cut" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="qualité-de-coupe-cut"><span class="header-section-number">4.1</span> Qualité de Coupe (Cut)</h2>
+<div class="cell" data-layout-align="center">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(diamonds, <span class="fu">aes</span>(<span class="at">x =</span> cut, <span class="at">y =</span> price, <span class="at">fill =</span> cut)) <span class="sc">+</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_brewer</span>(<span class="at">palette =</span> <span class="st">"Set2"</span>) <span class="sc">+</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> <span class="fu">dollar_format</span>()) <span class="sc">+</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Distribution du Prix par Qualité de Coupe"</span>,</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Qualité de Coupe"</span>,</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Prix (USD)"</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.position =</span> <span class="st">"none"</span>,</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">hjust =</span> <span class="dv">1</span>)</span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="rapport_diamants_files/figure-html/boxplot-cut-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="couleur-color" class="level2" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="couleur-color"><span class="header-section-number">4.2</span> Couleur (Color)</h2>
+<p>La couleur est notée de <strong>D (meilleure)</strong> à <strong>J (moins bonne)</strong>.</p>
+<div class="cell" data-layout-align="center">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(diamonds, <span class="fu">aes</span>(<span class="at">x =</span> color, <span class="at">y =</span> price, <span class="at">fill =</span> color)) <span class="sc">+</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_brewer</span>(<span class="at">palette =</span> <span class="st">"Spectral"</span>, <span class="at">direction =</span> <span class="sc">-</span><span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> <span class="fu">dollar_format</span>()) <span class="sc">+</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Distribution du Prix par Couleur"</span>,</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"D = Incolore (meilleur) • J = Jaune pâle"</span>,</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Couleur"</span>,</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Prix (USD)"</span></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="rapport_diamants_files/figure-html/boxplot-color-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="pureté-clarity" class="level2" data-number="4.3">
+<h2 data-number="4.3" class="anchored" data-anchor-id="pureté-clarity"><span class="header-section-number">4.3</span> Pureté (Clarity)</h2>
+<div class="cell" data-layout-align="center">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(diamonds, <span class="fu">aes</span>(<span class="at">x =</span> clarity, <span class="at">y =</span> price, <span class="at">fill =</span> clarity)) <span class="sc">+</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_brewer</span>(<span class="at">palette =</span> <span class="st">"Accent"</span>) <span class="sc">+</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> <span class="fu">dollar_format</span>()) <span class="sc">+</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Distribution du Prix par Pureté"</span>,</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Pureté (Clarity)"</span>,</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Prix (USD)"</span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.position =</span> <span class="st">"none"</span>,</span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">hjust =</span> <span class="dv">1</span>)</span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="rapport_diamants_files/figure-html/boxplot-clarity-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+<hr>
+</section>
+</section>
+<section id="analyses-approfondies" class="level1" data-number="5">
+<h1 data-number="5"><span class="header-section-number">5</span> Analyses Approfondies</h1>
+<section id="top-10-diamants-les-plus-chers" class="level2" data-number="5.1">
+<h2 data-number="5.1" class="anchored" data-anchor-id="top-10-diamants-les-plus-chers"><span class="header-section-number">5.1</span> Top 10 Diamants les Plus Chers</h2>
+<div class="cell" data-layout-align="center">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>top_diamants <span class="ot">&lt;-</span> diamonds <span class="sc">%&gt;%</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(price)) <span class="sc">%&gt;%</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(carat, cut, color, clarity, price) <span class="sc">%&gt;%</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">10</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">Rang =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>,</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">Prix =</span> <span class="fu">dollar</span>(price)</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Rang, carat, cut, color, clarity, Prix)</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(top_diamants, <span class="at">caption =</span> <span class="st">"Les 10 Diamants les Plus Chers"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>Les 10 Diamants les Plus Chers</caption>
+<thead>
+<tr class="header">
+<th style="text-align: right;">Rang</th>
+<th style="text-align: right;">carat</th>
+<th style="text-align: left;">cut</th>
+<th style="text-align: left;">color</th>
+<th style="text-align: left;">clarity</th>
+<th style="text-align: left;">Prix</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">2.29</td>
+<td style="text-align: left;">Premium</td>
+<td style="text-align: left;">I</td>
+<td style="text-align: left;">VS2</td>
+<td style="text-align: left;">$18,823</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">2.00</td>
+<td style="text-align: left;">Very Good</td>
+<td style="text-align: left;">G</td>
+<td style="text-align: left;">SI1</td>
+<td style="text-align: left;">$18,818</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">1.51</td>
+<td style="text-align: left;">Ideal</td>
+<td style="text-align: left;">G</td>
+<td style="text-align: left;">IF</td>
+<td style="text-align: left;">$18,806</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">2.07</td>
+<td style="text-align: left;">Ideal</td>
+<td style="text-align: left;">G</td>
+<td style="text-align: left;">SI2</td>
+<td style="text-align: left;">$18,804</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">2.00</td>
+<td style="text-align: left;">Very Good</td>
+<td style="text-align: left;">H</td>
+<td style="text-align: left;">SI1</td>
+<td style="text-align: left;">$18,803</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">2.29</td>
+<td style="text-align: left;">Premium</td>
+<td style="text-align: left;">I</td>
+<td style="text-align: left;">SI1</td>
+<td style="text-align: left;">$18,797</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">2.04</td>
+<td style="text-align: left;">Premium</td>
+<td style="text-align: left;">H</td>
+<td style="text-align: left;">SI1</td>
+<td style="text-align: left;">$18,795</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">2.00</td>
+<td style="text-align: left;">Premium</td>
+<td style="text-align: left;">I</td>
+<td style="text-align: left;">VS1</td>
+<td style="text-align: left;">$18,795</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">1.71</td>
+<td style="text-align: left;">Premium</td>
+<td style="text-align: left;">F</td>
+<td style="text-align: left;">VS2</td>
+<td style="text-align: left;">$18,791</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">2.15</td>
+<td style="text-align: left;">Ideal</td>
+<td style="text-align: left;">G</td>
+<td style="text-align: left;">SI2</td>
+<td style="text-align: left;">$18,791</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="matrice-de-corrélation" class="level2" data-number="5.2">
+<h2 data-number="5.2" class="anchored" data-anchor-id="matrice-de-corrélation"><span class="header-section-number">5.2</span> Matrice de Corrélation</h2>
+<div class="cell" data-layout-align="center">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculer corrélations</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>cor_vars <span class="ot">&lt;-</span> diamonds <span class="sc">%&gt;%</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(carat, depth, table, price, x, y, z) <span class="sc">%&gt;%</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cor</span>()</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualiser</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="fu">corrplot</span>(cor_vars, </span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>         <span class="at">method =</span> <span class="st">"color"</span>, </span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>         <span class="at">type =</span> <span class="st">"upper"</span>,</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>         <span class="at">tl.col =</span> <span class="st">"black"</span>,</span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>         <span class="at">tl.cex =</span> <span class="fl">1.2</span>,</span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>         <span class="at">addCoef.col =</span> <span class="st">"black"</span>,</span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>         <span class="at">number.cex =</span> <span class="dv">1</span>,</span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>         <span class="at">col =</span> <span class="fu">colorRampPalette</span>(<span class="fu">c</span>(<span class="st">"#6D9EC1"</span>, <span class="st">"white"</span>, <span class="st">"#E46726"</span>))(<span class="dv">200</span>),</span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>         <span class="at">title =</span> <span class="st">"Corrélations entre Variables Numériques"</span>,</span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a>         <span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">2</span>, <span class="dv">0</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="rapport_diamants_files/figure-html/correlation-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>💡 Observations
+</div>
+</div>
+<div class="callout-body-container callout-body">
 <ul>
-<li><p>Prix moyen : ~ $3 933 (médiane $2 401 → distribution asymétrique)</p></li>
-<li><p>Carat moyen : 0.8 (max 5.01)</p></li>
-<li><p>La qualité de coupe “Ideal” est la plus fréquente</p></li>
+<li><strong>Carat</strong> a la corrélation la plus forte avec le prix (0.922)</li>
+<li>Les dimensions <strong>x, y, z</strong> sont fortement corrélées entre elles (logique : taille du diamant)</li>
+<li><strong>Depth</strong> et <strong>table</strong> ont peu d’impact sur le prix</li>
 </ul>
-<section id="statistiques-par-qualité-de-coupe-cut" class="level3">
-<h3 class="anchored" data-anchor-id="statistiques-par-qualité-de-coupe-cut">Statistiques par Qualité de Coupe (Cut)</h3>
-<pre class="{diamonds_summary <- diamonds %>%}"><code>  group_by(cut) %&gt;%
-  summarise(
-    Nombre = n(),
-    Prix_Moyen = round(mean(price), 0),
-    Prix_Médian = median(price),
-    Carat_Moyen = round(mean(carat), 2)
-  ) %&gt;%
-  arrange(desc(Prix_Moyen))
-
-diamonds_summary</code></pre>
+</div>
+</div>
+</section>
+<section id="top-combinaisons-cut-color" class="level2" data-number="5.3">
+<h2 data-number="5.3" class="anchored" data-anchor-id="top-combinaisons-cut-color"><span class="header-section-number">5.3</span> Top Combinaisons Cut + Color</h2>
+<div class="cell" data-layout-align="center">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>top_combo <span class="ot">&lt;-</span> diamonds <span class="sc">%&gt;%</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(cut, color) <span class="sc">%&gt;%</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">`</span><span class="at">Prix Moyen</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">dollar</span>(<span class="fu">mean</span>(price)),</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">Nombre =</span> <span class="fu">n</span>(),</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">.groups =</span> <span class="st">'drop'</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(<span class="st">`</span><span class="at">Prix Moyen</span><span class="st">`</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">10</span>)</span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(top_combo, <span class="at">caption =</span> <span class="st">"Top 10 Combinaisons Cut-Color par Prix Moyen"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>Top 10 Combinaisons Cut-Color par Prix Moyen</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">cut</th>
+<th style="text-align: left;">color</th>
+<th style="text-align: left;">Prix Moyen</th>
+<th style="text-align: right;">Nombre</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Premium</td>
+<td style="text-align: left;">J</td>
+<td style="text-align: left;">$6,294.59</td>
+<td style="text-align: right;">808</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Premium</td>
+<td style="text-align: left;">I</td>
+<td style="text-align: left;">$5,946.18</td>
+<td style="text-align: right;">1428</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Very Good</td>
+<td style="text-align: left;">I</td>
+<td style="text-align: left;">$5,255.88</td>
+<td style="text-align: right;">1204</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Premium</td>
+<td style="text-align: left;">H</td>
+<td style="text-align: left;">$5,216.71</td>
+<td style="text-align: right;">2360</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Fair</td>
+<td style="text-align: left;">H</td>
+<td style="text-align: left;">$5,135.68</td>
+<td style="text-align: right;">303</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Very Good</td>
+<td style="text-align: left;">J</td>
+<td style="text-align: left;">$5,103.51</td>
+<td style="text-align: right;">678</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Good</td>
+<td style="text-align: left;">I</td>
+<td style="text-align: left;">$5,078.53</td>
+<td style="text-align: right;">522</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Fair</td>
+<td style="text-align: left;">J</td>
+<td style="text-align: left;">$4,975.66</td>
+<td style="text-align: right;">119</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Ideal</td>
+<td style="text-align: left;">J</td>
+<td style="text-align: left;">$4,918.19</td>
+<td style="text-align: right;">896</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Fair</td>
+<td style="text-align: left;">I</td>
+<td style="text-align: left;">$4,685.45</td>
+<td style="text-align: right;">175</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<hr>
 </section>
 </section>
-<section id="visualisations-exploratoires" class="level2">
-<h2 class="anchored" data-anchor-id="visualisations-exploratoires">Visualisations Exploratoires</h2>
-<section id="distribution-du-prix-et-du-carat" class="level3">
-<h3 class="anchored" data-anchor-id="distribution-du-prix-et-du-carat">Distribution du Prix et du Carat</h3>
-<p>```{p1 &lt;- ggplot(diamonds, aes(x = price)) +} geom_histogram(bins = 50, fill = “#00AFBB”, color = “white”) + labs(title = “Distribution du Prix”, x = “Prix (USD)”, y = “Nombre”) + theme_minimal()</p>
-<p>p2 &lt;- ggplot(diamonds, aes(x = carat)) + geom_histogram(bins = 50, fill = “#FC4E07”, color = “white”) + labs(title = “Distribution du Carat”, x = “Carat”, y = “Nombre”) + theme_minimal()</p>
-<p>grid.arrange(p1, p2, ncol = 2)</p>
-<pre><code>
-### Relation Prix vs Carat (Facteur Principal)
-
-```{# Échantillon pour clarté visuelle}
-diamonds_sample &lt;- diamonds %&gt;% sample_n(8000)
-
-ggplot(diamonds_sample, aes(x = carat, y = price, color = cut)) +
-  geom_point(alpha = 0.5, size = 1.2) +
-  geom_smooth(method = "lm", se = FALSE) +
-  scale_color_brewer(palette = "Set1") +
-  labs(title = "Prix vs Carat par Qualité de Coupe",
-       subtitle = "Relation forte et positive",
-       x = "Carat", y = "Prix (USD)") +
-  theme_minimal()</code></pre>
-</section>
-<section id="comparaisons-par-catégories" class="level3">
-<h3 class="anchored" data-anchor-id="comparaisons-par-catégories">Comparaisons par Catégories</h3>
-<p>```{p3 &lt;- ggplot(diamonds, aes(x = cut, y = price, fill = cut)) +} geom_boxplot() + labs(title = “Prix par Qualité de Coupe”) + theme_minimal() + theme(axis.text.x = element_text(angle = 45, hjust = 1))</p>
-<p>p4 &lt;- ggplot(diamonds, aes(x = color, y = price, fill = color)) + geom_boxplot() + labs(title = “Prix par Couleur (D = meilleur)”) + theme_minimal()</p>
-<p>grid.arrange(p3, p4, ncol = 2)</p>
-<pre><code>
-### Matrice de Corrélation
-
-```{numeric_vars &lt;- diamonds %&gt;% select(carat, depth, table, price, x, y, z)}
-cor_matrix &lt;- cor(numeric_vars)
-corrplot(cor_matrix, method = "color", type = "upper", tl.cex = 0.9,
-         title = "Corrélations entre Variables Numériques")</code></pre>
-</section>
-</section>
-<section id="insights-et-conclusion" class="level2">
-<h2 class="anchored" data-anchor-id="insights-et-conclusion">Insights et Conclusion</h2>
-<p><strong>Principaux résultats</strong> :</p>
+<section id="conclusions-recommandations" class="level1" data-number="6">
+<h1 data-number="6"><span class="header-section-number">6</span> Conclusions &amp; Recommandations</h1>
+<div class="callout callout-style-default callout-important no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>🎯 Insights Clés
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li><strong>Le Carat est ROI</strong> : Corrélation de 0.922 avec le prix</li>
+<li><strong>Cut “Ideal” domine</strong> : 40% des diamants</li>
+<li><strong>Couleurs D-F</strong> : Premium price pour qualité supérieure</li>
+<li><strong>Seuil psychologique</strong> : Pics de demande à 0.5, 1.0, 1.5 carats</li>
+</ol>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>💼 Recommandations Stratégiques
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<section id="pour-le-pricing" class="level3" data-number="6.0.1">
+<h3 data-number="6.0.1" class="anchored" data-anchor-id="pour-le-pricing"><span class="header-section-number">6.0.1</span> Pour le Pricing</h3>
 <ul>
-<li><p>Le <strong>carat</strong> est le facteur dominant du prix (corrélation ~0.92 avec x,y,z)</p></li>
-<li><p>Meilleure <strong>cut</strong> (Ideal) → plus de diamants mais prix moyen pas toujours le plus élevé (effet volume)</p></li>
-<li><p>Couleurs D-F (incolores) sont plus chères en moyenne</p></li>
-<li><p>Forte corrélation positive entre prix et dimensions (x,y,z)</p></li>
+<li>Appliquer un premium de <strong>15-20%</strong> pour diamants &gt;1 carat</li>
+<li>Valoriser combinaisons <strong>Ideal Cut + Color D-F</strong></li>
 </ul>
-<p><strong>Recommandations</strong> (pour un joaillier) :</p>
+</section>
+<section id="pour-linventaire" class="level3" data-number="6.0.2">
+<h3 data-number="6.0.2" class="anchored" data-anchor-id="pour-linventaire"><span class="header-section-number">6.0.2</span> Pour l’Inventaire</h3>
 <ul>
-<li><p>Prioriser les diamants &gt;1 carat pour maximiser le prix</p></li>
-<li><p>Équilibrer qualité cut/clarity pour un bon rapport qualité-prix</p></li>
+<li>Prioriser stock de <strong>0.9-1.1 carats</strong> (demande forte)</li>
+<li>Maintenir diversité de <strong>Clarity</strong> (SI1-VS2 = meilleur rapport qualité-prix)</li>
+</ul>
+</section>
+<section id="pour-le-marketing" class="level3" data-number="6.0.3">
+<h3 data-number="6.0.3" class="anchored" data-anchor-id="pour-le-marketing"><span class="header-section-number">6.0.3</span> Pour le Marketing</h3>
+<ul>
+<li>Communiquer sur les <strong>4C</strong> avec focus sur Carat</li>
+<li>Proposer gamme “Premium” : Ideal + D-F + VS1+</li>
+</ul>
+</section>
+</div>
+</div>
+<hr>
+</section>
+<section id="merci-pour-votre-attention" class="level1" style="text-align: center; padding: 40px; background: #f8f9fa; border-radius: 10px; margin-top: 40px;" data-number="7">
+<h1 data-number="7"><span class="header-section-number">7</span> Merci pour votre attention ! 💎</h1>
+<p><strong>Projet réalisé par Abir Hamda</strong></p>
+<p><em>Analyse Descriptive • R • Quarto</em></p>
+<p><a href="mailto:votre.email@exemple.com">📧 Contact</a> • <a href="https://github.com/">🔗 GitHub</a></p>
+</section>
+<hr>
+
+
+<div id="quarto-appendix" class="default"><section id="annexes" class="level1 appendix" data-number="8"><h2 class="anchored quarto-appendix-heading"><span class="header-section-number">8</span> Annexes</h2><div class="quarto-appendix-contents">
+
+<section id="code-source-complet" class="level2" data-number="8.1">
+<h2 data-number="8.1" class="anchored" data-anchor-id="code-source-complet"><span class="header-section-number">8.1</span> Code Source Complet</h2>
+<p>L’ensemble du code utilisé pour cette analyse est disponible sur GitHub.</p>
+</section>
+<section id="méthodologie" class="level2" data-number="8.2">
+<h2 data-number="8.2" class="anchored" data-anchor-id="méthodologie"><span class="header-section-number">8.2</span> Méthodologie</h2>
+<ul>
+<li><strong>Outil</strong> : R 4.x + RStudio</li>
+<li><strong>Packages</strong> : ggplot2, dplyr, corrplot</li>
+<li><strong>Dataset</strong> : diamonds (ggplot2)</li>
+<li><strong>Échantillonnage</strong> : 10 000 observations pour certains graphiques (performance)</li>
+</ul>
+</section>
+<section id="références" class="level2" data-number="8.3">
+<h2 data-number="8.3" class="anchored" data-anchor-id="références"><span class="header-section-number">8.3</span> Références</h2>
+<ul>
+<li>Documentation R : <a href="https://cran.r-project.org/">CRAN</a></li>
+<li>ggplot2 : <a href="https://ggplot2.tidyverse.org/">tidyverse.org</a></li>
+<li>Quarto : <a href="https://quarto.org/">quarto.org</a></li>
 </ul>
 <!-- -->
 
 </section>
-
-</main>
+</div></section></div></main>
 <!-- /main column -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
@@ -700,184 +1263,354 @@ corrplot(cor_matrix, method = "color", type = "upper", tl.cex = 0.9,
     }
   });
   </script><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co">  </span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>title: "Analyse Descriptive du Dataset Diamonds : Les Facteurs qui Font Briller le Prix 💎"</span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>author: "Abir Hamda"</span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>date: "2026"</span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>format: </span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>  html:</span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>    theme: cosmo  # Thème moderne et élégant</span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>    toc: true      # Table des matières automatique</span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>    toc-depth: 3</span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>    code-fold: true  # Permet de plier le code pour une présentation propre</span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>    code-tools: true # Bouton pour copier/exécuter le code</span>
-<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>webr:</span>
-<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>  packages: <span class="co">[</span><span class="ot">'ggplot2', 'dplyr', 'corrplot', 'gridExtra'</span><span class="co">]</span>  # Pour les plots et tables</span>
-<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>---</span>
-<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a><span class="fu">## Introduction et Objectifs du Projet</span></span>
-<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>Ce projet présente une **analyse descriptive complète** du dataset **diamonds** (inclus dans R via ggplot2), contenant **53 940 diamants** avec 10 variables :</span>
-<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**price** : Prix en dollars US (variable cible)</span>
-<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**carat** : Poids du diamant</span>
-<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**cut** : Qualité de la taille (Fair, Good, Very Good, Premium, Ideal)</span>
-<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**color** : Couleur (D = meilleure/incolore à J = pire)</span>
-<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**clarity** : Pureté (I1 pire à IF meilleure)</span>
-<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Dimensions : depth, table, x, y, z</span>
-<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a>**Objectifs** :</span>
-<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Explorer la distribution des variables</span>
-<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Identifier les facteurs influençant le prix</span>
-<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Visualiser les relations clés</span>
-<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Tirer des insights business (ex. pour la joaillerie)</span>
-<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a>Le rapport est **interactif** : modifiez et exécutez le code R directement dans votre navigateur !</span>
-<span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a><span class="fu">## Présentation des 4C du Diamant</span></span>
-<span id="cb5-39"><a href="#cb5-39" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-40"><a href="#cb5-40" aria-hidden="true" tabindex="-1"></a>Les diamants sont évalués selon les **4C** (Carat, Cut, Color, Clarity).</span>
-<span id="cb5-41"><a href="#cb5-41" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-42"><a href="#cb5-42" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">grok-card</span><span class="ot"> data-id</span><span class="op">=</span><span class="st">"47f212"</span><span class="ot"> data-type</span><span class="op">=</span><span class="st">"image_card"</span><span class="ot">  data-arg-size</span><span class="op">=</span><span class="st">"LARGE"</span><span class="ot"> </span><span class="dt">&gt;&lt;/</span><span class="kw">grok-card</span><span class="dt">&gt;</span></span>
-<span id="cb5-43"><a href="#cb5-43" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-44"><a href="#cb5-44" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-45"><a href="#cb5-45" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-46"><a href="#cb5-46" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">grok-card</span><span class="ot"> data-id</span><span class="op">=</span><span class="st">"ddeda8"</span><span class="ot"> data-type</span><span class="op">=</span><span class="st">"image_card"</span><span class="ot">  data-arg-size</span><span class="op">=</span><span class="st">"LARGE"</span><span class="ot"> </span><span class="dt">&gt;&lt;/</span><span class="kw">grok-card</span><span class="dt">&gt;</span></span>
-<span id="cb5-47"><a href="#cb5-47" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-48"><a href="#cb5-48" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-49"><a href="#cb5-49" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-50"><a href="#cb5-50" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">grok-card</span><span class="ot"> data-id</span><span class="op">=</span><span class="st">"a7d28b"</span><span class="ot"> data-type</span><span class="op">=</span><span class="st">"image_card"</span><span class="ot">  data-arg-size</span><span class="op">=</span><span class="st">"LARGE"</span><span class="ot"> </span><span class="dt">&gt;&lt;/</span><span class="kw">grok-card</span><span class="dt">&gt;</span></span>
-<span id="cb5-51"><a href="#cb5-51" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-52"><a href="#cb5-52" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-53"><a href="#cb5-53" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-54"><a href="#cb5-54" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">grok-card</span><span class="ot"> data-id</span><span class="op">=</span><span class="st">"0afa8f"</span><span class="ot"> data-type</span><span class="op">=</span><span class="st">"image_card"</span><span class="ot">  data-arg-size</span><span class="op">=</span><span class="st">"LARGE"</span><span class="ot"> </span><span class="dt">&gt;&lt;/</span><span class="kw">grok-card</span><span class="dt">&gt;</span></span>
-<span id="cb5-55"><a href="#cb5-55" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-56"><a href="#cb5-56" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-57"><a href="#cb5-57" aria-hidden="true" tabindex="-1"></a><span class="fu">## Chargement et Aperçu des Données</span></span>
-<span id="cb5-58"><a href="#cb5-58" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-59"><a href="#cb5-59" aria-hidden="true" tabindex="-1"></a><span class="in">```{webr-r}</span></span>
-<span id="cb5-60"><a href="#cb5-60" aria-hidden="true" tabindex="-1"></a><span class="in">library(ggplot2)</span></span>
-<span id="cb5-61"><a href="#cb5-61" aria-hidden="true" tabindex="-1"></a><span class="in">library(dplyr)</span></span>
-<span id="cb5-62"><a href="#cb5-62" aria-hidden="true" tabindex="-1"></a><span class="in">library(corrplot)</span></span>
-<span id="cb5-63"><a href="#cb5-63" aria-hidden="true" tabindex="-1"></a><span class="in">library(gridExtra)</span></span>
-<span id="cb5-64"><a href="#cb5-64" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-65"><a href="#cb5-65" aria-hidden="true" tabindex="-1"></a><span class="in">data(diamonds)</span></span>
-<span id="cb5-66"><a href="#cb5-66" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-67"><a href="#cb5-67" aria-hidden="true" tabindex="-1"></a><span class="in"># Aperçu</span></span>
-<span id="cb5-68"><a href="#cb5-68" aria-hidden="true" tabindex="-1"></a><span class="in">head(diamonds)</span></span>
-<span id="cb5-69"><a href="#cb5-69" aria-hidden="true" tabindex="-1"></a><span class="in">str(diamonds)</span></span>
-<span id="cb5-70"><a href="#cb5-70" aria-hidden="true" tabindex="-1"></a><span class="in">dim(diamonds)  # 53940 observations, 10 variables</span></span>
-<span id="cb5-71"><a href="#cb5-71" aria-hidden="true" tabindex="-1"></a><span class="in">---</span></span>
-<span id="cb5-72"><a href="#cb5-72" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-73"><a href="#cb5-73" aria-hidden="true" tabindex="-1"></a><span class="in">## Statistiques Descriptives Globales</span></span>
-<span id="cb5-74"><a href="#cb5-74" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-75"><a href="#cb5-75" aria-hidden="true" tabindex="-1"></a><span class="in">```{summary(diamonds)}</span></span>
-<span id="cb5-76"><a href="#cb5-76" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb5-77"><a href="#cb5-77" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-78"><a href="#cb5-78" aria-hidden="true" tabindex="-1"></a>**Observations clés** :</span>
-<span id="cb5-79"><a href="#cb5-79" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-80"><a href="#cb5-80" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Prix moyen : \~ \$3 933 (médiane \$2 401 → distribution asymétrique)</span>
-<span id="cb5-81"><a href="#cb5-81" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-82"><a href="#cb5-82" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Carat moyen : 0.8 (max 5.01)</span>
-<span id="cb5-83"><a href="#cb5-83" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-84"><a href="#cb5-84" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>La qualité de coupe "Ideal" est la plus fréquente</span>
-<span id="cb5-85"><a href="#cb5-85" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-86"><a href="#cb5-86" aria-hidden="true" tabindex="-1"></a><span class="fu">### Statistiques par Qualité de Coupe (Cut)</span></span>
-<span id="cb5-87"><a href="#cb5-87" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-88"><a href="#cb5-88" aria-hidden="true" tabindex="-1"></a><span class="in">```{diamonds_summary &lt;- diamonds %&gt;%}</span></span>
-<span id="cb5-89"><a href="#cb5-89" aria-hidden="true" tabindex="-1"></a><span class="in">  group_by(cut) %&gt;%</span></span>
-<span id="cb5-90"><a href="#cb5-90" aria-hidden="true" tabindex="-1"></a><span class="in">  summarise(</span></span>
-<span id="cb5-91"><a href="#cb5-91" aria-hidden="true" tabindex="-1"></a><span class="in">    Nombre = n(),</span></span>
-<span id="cb5-92"><a href="#cb5-92" aria-hidden="true" tabindex="-1"></a><span class="in">    Prix_Moyen = round(mean(price), 0),</span></span>
-<span id="cb5-93"><a href="#cb5-93" aria-hidden="true" tabindex="-1"></a><span class="in">    Prix_Médian = median(price),</span></span>
-<span id="cb5-94"><a href="#cb5-94" aria-hidden="true" tabindex="-1"></a><span class="in">    Carat_Moyen = round(mean(carat), 2)</span></span>
-<span id="cb5-95"><a href="#cb5-95" aria-hidden="true" tabindex="-1"></a><span class="in">  ) %&gt;%</span></span>
-<span id="cb5-96"><a href="#cb5-96" aria-hidden="true" tabindex="-1"></a><span class="in">  arrange(desc(Prix_Moyen))</span></span>
-<span id="cb5-97"><a href="#cb5-97" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-98"><a href="#cb5-98" aria-hidden="true" tabindex="-1"></a><span class="in">diamonds_summary</span></span>
-<span id="cb5-99"><a href="#cb5-99" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb5-100"><a href="#cb5-100" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-101"><a href="#cb5-101" aria-hidden="true" tabindex="-1"></a><span class="fu">## Visualisations Exploratoires</span></span>
-<span id="cb5-102"><a href="#cb5-102" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-103"><a href="#cb5-103" aria-hidden="true" tabindex="-1"></a><span class="fu">### Distribution du Prix et du Carat</span></span>
-<span id="cb5-104"><a href="#cb5-104" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-105"><a href="#cb5-105" aria-hidden="true" tabindex="-1"></a><span class="in">```{p1 &lt;- ggplot(diamonds, aes(x = price)) +}</span></span>
-<span id="cb5-106"><a href="#cb5-106" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_histogram(bins = 50, fill = "#00AFBB", color = "white") +</span></span>
-<span id="cb5-107"><a href="#cb5-107" aria-hidden="true" tabindex="-1"></a><span class="in">  labs(title = "Distribution du Prix", x = "Prix (USD)", y = "Nombre") +</span></span>
-<span id="cb5-108"><a href="#cb5-108" aria-hidden="true" tabindex="-1"></a><span class="in">  theme_minimal()</span></span>
-<span id="cb5-109"><a href="#cb5-109" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-110"><a href="#cb5-110" aria-hidden="true" tabindex="-1"></a><span class="in">p2 &lt;- ggplot(diamonds, aes(x = carat)) +</span></span>
-<span id="cb5-111"><a href="#cb5-111" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_histogram(bins = 50, fill = "#FC4E07", color = "white") +</span></span>
-<span id="cb5-112"><a href="#cb5-112" aria-hidden="true" tabindex="-1"></a><span class="in">  labs(title = "Distribution du Carat", x = "Carat", y = "Nombre") +</span></span>
-<span id="cb5-113"><a href="#cb5-113" aria-hidden="true" tabindex="-1"></a><span class="in">  theme_minimal()</span></span>
-<span id="cb5-114"><a href="#cb5-114" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-115"><a href="#cb5-115" aria-hidden="true" tabindex="-1"></a><span class="in">grid.arrange(p1, p2, ncol = 2)</span></span>
-<span id="cb5-116"><a href="#cb5-116" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb5-117"><a href="#cb5-117" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-118"><a href="#cb5-118" aria-hidden="true" tabindex="-1"></a><span class="fu">### Relation Prix vs Carat (Facteur Principal)</span></span>
-<span id="cb5-119"><a href="#cb5-119" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-120"><a href="#cb5-120" aria-hidden="true" tabindex="-1"></a><span class="in">```{# Échantillon pour clarté visuelle}</span></span>
-<span id="cb5-121"><a href="#cb5-121" aria-hidden="true" tabindex="-1"></a><span class="in">diamonds_sample &lt;- diamonds %&gt;% sample_n(8000)</span></span>
-<span id="cb5-122"><a href="#cb5-122" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-123"><a href="#cb5-123" aria-hidden="true" tabindex="-1"></a><span class="in">ggplot(diamonds_sample, aes(x = carat, y = price, color = cut)) +</span></span>
-<span id="cb5-124"><a href="#cb5-124" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_point(alpha = 0.5, size = 1.2) +</span></span>
-<span id="cb5-125"><a href="#cb5-125" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_smooth(method = "lm", se = FALSE) +</span></span>
-<span id="cb5-126"><a href="#cb5-126" aria-hidden="true" tabindex="-1"></a><span class="in">  scale_color_brewer(palette = "Set1") +</span></span>
-<span id="cb5-127"><a href="#cb5-127" aria-hidden="true" tabindex="-1"></a><span class="in">  labs(title = "Prix vs Carat par Qualité de Coupe",</span></span>
-<span id="cb5-128"><a href="#cb5-128" aria-hidden="true" tabindex="-1"></a><span class="in">       subtitle = "Relation forte et positive",</span></span>
-<span id="cb5-129"><a href="#cb5-129" aria-hidden="true" tabindex="-1"></a><span class="in">       x = "Carat", y = "Prix (USD)") +</span></span>
-<span id="cb5-130"><a href="#cb5-130" aria-hidden="true" tabindex="-1"></a><span class="in">  theme_minimal()</span></span>
-<span id="cb5-131"><a href="#cb5-131" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb5-132"><a href="#cb5-132" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-133"><a href="#cb5-133" aria-hidden="true" tabindex="-1"></a><span class="fu">### Comparaisons par Catégories</span></span>
-<span id="cb5-134"><a href="#cb5-134" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-135"><a href="#cb5-135" aria-hidden="true" tabindex="-1"></a><span class="in">```{p3 &lt;- ggplot(diamonds, aes(x = cut, y = price, fill = cut)) +}</span></span>
-<span id="cb5-136"><a href="#cb5-136" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_boxplot() +</span></span>
-<span id="cb5-137"><a href="#cb5-137" aria-hidden="true" tabindex="-1"></a><span class="in">  labs(title = "Prix par Qualité de Coupe") +</span></span>
-<span id="cb5-138"><a href="#cb5-138" aria-hidden="true" tabindex="-1"></a><span class="in">  theme_minimal() +</span></span>
-<span id="cb5-139"><a href="#cb5-139" aria-hidden="true" tabindex="-1"></a><span class="in">  theme(axis.text.x = element_text(angle = 45, hjust = 1))</span></span>
-<span id="cb5-140"><a href="#cb5-140" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-141"><a href="#cb5-141" aria-hidden="true" tabindex="-1"></a><span class="in">p4 &lt;- ggplot(diamonds, aes(x = color, y = price, fill = color)) +</span></span>
-<span id="cb5-142"><a href="#cb5-142" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_boxplot() +</span></span>
-<span id="cb5-143"><a href="#cb5-143" aria-hidden="true" tabindex="-1"></a><span class="in">  labs(title = "Prix par Couleur (D = meilleur)") +</span></span>
-<span id="cb5-144"><a href="#cb5-144" aria-hidden="true" tabindex="-1"></a><span class="in">  theme_minimal()</span></span>
-<span id="cb5-145"><a href="#cb5-145" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-146"><a href="#cb5-146" aria-hidden="true" tabindex="-1"></a><span class="in">grid.arrange(p3, p4, ncol = 2)</span></span>
-<span id="cb5-147"><a href="#cb5-147" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-148"><a href="#cb5-148" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb5-149"><a href="#cb5-149" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-150"><a href="#cb5-150" aria-hidden="true" tabindex="-1"></a><span class="fu">### Matrice de Corrélation</span></span>
-<span id="cb5-151"><a href="#cb5-151" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-152"><a href="#cb5-152" aria-hidden="true" tabindex="-1"></a><span class="in">```{numeric_vars &lt;- diamonds %&gt;% select(carat, depth, table, price, x, y, z)}</span></span>
-<span id="cb5-153"><a href="#cb5-153" aria-hidden="true" tabindex="-1"></a><span class="in">cor_matrix &lt;- cor(numeric_vars)</span></span>
-<span id="cb5-154"><a href="#cb5-154" aria-hidden="true" tabindex="-1"></a><span class="in">corrplot(cor_matrix, method = "color", type = "upper", tl.cex = 0.9,</span></span>
-<span id="cb5-155"><a href="#cb5-155" aria-hidden="true" tabindex="-1"></a><span class="in">         title = "Corrélations entre Variables Numériques")</span></span>
-<span id="cb5-156"><a href="#cb5-156" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb5-157"><a href="#cb5-157" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-158"><a href="#cb5-158" aria-hidden="true" tabindex="-1"></a><span class="fu">## Insights et Conclusion</span></span>
-<span id="cb5-159"><a href="#cb5-159" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-160"><a href="#cb5-160" aria-hidden="true" tabindex="-1"></a>**Principaux résultats** :</span>
-<span id="cb5-161"><a href="#cb5-161" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-162"><a href="#cb5-162" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Le **carat** est le facteur dominant du prix (corrélation \~0.92 avec x,y,z)</span>
-<span id="cb5-163"><a href="#cb5-163" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-164"><a href="#cb5-164" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Meilleure **cut** (Ideal) → plus de diamants mais prix moyen pas toujours le plus élevé (effet volume)</span>
-<span id="cb5-165"><a href="#cb5-165" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-166"><a href="#cb5-166" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Couleurs D-F (incolores) sont plus chères en moyenne</span>
-<span id="cb5-167"><a href="#cb5-167" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-168"><a href="#cb5-168" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Forte corrélation positive entre prix et dimensions (x,y,z)</span>
-<span id="cb5-169"><a href="#cb5-169" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-170"><a href="#cb5-170" aria-hidden="true" tabindex="-1"></a>**Recommandations** (pour un joaillier) :</span>
-<span id="cb5-171"><a href="#cb5-171" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-172"><a href="#cb5-172" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Prioriser les diamants <span class="sc">\&gt;</span>1 carat pour maximiser le prix</span>
-<span id="cb5-173"><a href="#cb5-173" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-174"><a href="#cb5-174" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Équilibrer qualité cut/clarity pour un bon rapport qualité-prix</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Analyse des Diamants : Les Facteurs du Prix 💎"</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="an">subtitle:</span><span class="co"> "Projet d'Analyse Descriptive"</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="an">author:</span><span class="co"> "Abir Hamda"</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="an">date:</span><span class="co"> today</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="an">date-format:</span><span class="co"> "DD MMMM YYYY"</span></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="an">format:</span></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a><span class="co">  html:</span></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a><span class="co">    theme: cosmo</span></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a><span class="co">    toc: true</span></span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a><span class="co">    toc-title: "📋 Sommaire"</span></span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a><span class="co">    toc-depth: 3</span></span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a><span class="co">    number-sections: true</span></span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a><span class="co">    code-fold: show</span></span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a><span class="co">    code-tools: true</span></span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a><span class="co">    smooth-scroll: true</span></span>
+<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a><span class="co">    css: styles.css</span></span>
+<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a><span class="in">```{r setup, include=FALSE}</span></span>
+<span id="cb14-21"><a href="#cb14-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Configuration globale</span></span>
+<span id="cb14-22"><a href="#cb14-22" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span>opts_chunk<span class="sc">$</span><span class="fu">set</span>(</span>
+<span id="cb14-23"><a href="#cb14-23" aria-hidden="true" tabindex="-1"></a>  <span class="at">echo =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb14-24"><a href="#cb14-24" aria-hidden="true" tabindex="-1"></a>  <span class="at">warning =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb14-25"><a href="#cb14-25" aria-hidden="true" tabindex="-1"></a>  <span class="at">message =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb14-26"><a href="#cb14-26" aria-hidden="true" tabindex="-1"></a>  <span class="at">fig.align =</span> <span class="st">'center'</span>,</span>
+<span id="cb14-27"><a href="#cb14-27" aria-hidden="true" tabindex="-1"></a>  <span class="at">fig.width =</span> <span class="dv">10</span>,</span>
+<span id="cb14-28"><a href="#cb14-28" aria-hidden="true" tabindex="-1"></a>  <span class="at">fig.height =</span> <span class="dv">6</span></span>
+<span id="cb14-29"><a href="#cb14-29" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb14-30"><a href="#cb14-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-31"><a href="#cb14-31" aria-hidden="true" tabindex="-1"></a><span class="co"># Charger les packages</span></span>
+<span id="cb14-32"><a href="#cb14-32" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb14-33"><a href="#cb14-33" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb14-34"><a href="#cb14-34" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(corrplot)</span>
+<span id="cb14-35"><a href="#cb14-35" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(scales)</span>
+<span id="cb14-36"><a href="#cb14-36" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(knitr)</span>
+<span id="cb14-37"><a href="#cb14-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-38"><a href="#cb14-38" aria-hidden="true" tabindex="-1"></a><span class="co"># Charger les données</span></span>
+<span id="cb14-39"><a href="#cb14-39" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(diamonds)</span>
+<span id="cb14-40"><a href="#cb14-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-41"><a href="#cb14-41" aria-hidden="true" tabindex="-1"></a><span class="co"># Thème ggplot par défaut</span></span>
+<span id="cb14-42"><a href="#cb14-42" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">14</span>))</span>
+<span id="cb14-43"><a href="#cb14-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-44"><a href="#cb14-44" aria-hidden="true" tabindex="-1"></a><span class="co"># Échantillon pour performance</span></span>
+<span id="cb14-45"><a href="#cb14-45" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb14-46"><a href="#cb14-46" aria-hidden="true" tabindex="-1"></a>diamonds_sample <span class="ot">&lt;-</span> diamonds <span class="sc">%&gt;%</span> <span class="fu">sample_n</span>(<span class="dv">10000</span>)</span>
+<span id="cb14-47"><a href="#cb14-47" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb14-48"><a href="#cb14-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-49"><a href="#cb14-49" aria-hidden="true" tabindex="-1"></a>::: {.hero-banner style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 60px 20px; text-align: center; border-radius: 15px; margin-bottom: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.2);"}</span>
+<span id="cb14-50"><a href="#cb14-50" aria-hidden="true" tabindex="-1"></a><span class="fu"># 💎 Les 4C des Diamants</span></span>
+<span id="cb14-51"><a href="#cb14-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-52"><a href="#cb14-52" aria-hidden="true" tabindex="-1"></a>**Carat** • **Cut** • **Color** • **Clarity**</span>
+<span id="cb14-53"><a href="#cb14-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-54"><a href="#cb14-54" aria-hidden="true" tabindex="-1"></a><span class="fu">### `r format(nrow(diamonds), big.mark=" ")` diamants analysés</span></span>
+<span id="cb14-55"><a href="#cb14-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-56"><a href="#cb14-56" aria-hidden="true" tabindex="-1"></a>*Découvrez les insights pour comprendre les facteurs du prix*</span>
+<span id="cb14-57"><a href="#cb14-57" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb14-58"><a href="#cb14-58" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-59"><a href="#cb14-59" aria-hidden="true" tabindex="-1"></a><span class="fu"># Introduction {.unnumbered}</span></span>
+<span id="cb14-60"><a href="#cb14-60" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-61"><a href="#cb14-61" aria-hidden="true" tabindex="-1"></a>Ce rapport présente une analyse descriptive approfondie du dataset **diamonds**, qui contient les caractéristiques et prix de **53 940 diamants**.</span>
+<span id="cb14-62"><a href="#cb14-62" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-63"><a href="#cb14-63" aria-hidden="true" tabindex="-1"></a>**Objectifs :**</span>
+<span id="cb14-64"><a href="#cb14-64" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-65"><a href="#cb14-65" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Identifier les facteurs influençant le prix</span>
+<span id="cb14-66"><a href="#cb14-66" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Analyser les relations entre variables</span>
+<span id="cb14-67"><a href="#cb14-67" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Fournir des insights pour l'optimisation du pricing</span>
+<span id="cb14-68"><a href="#cb14-68" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-69"><a href="#cb14-69" aria-hidden="true" tabindex="-1"></a>------------------------------------------------------------------------</span>
+<span id="cb14-70"><a href="#cb14-70" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-71"><a href="#cb14-71" aria-hidden="true" tabindex="-1"></a><span class="fu"># Aperçu des Données</span></span>
+<span id="cb14-72"><a href="#cb14-72" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-73"><a href="#cb14-73" aria-hidden="true" tabindex="-1"></a><span class="fu">## Structure du Dataset</span></span>
+<span id="cb14-74"><a href="#cb14-74" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-75"><a href="#cb14-75" aria-hidden="true" tabindex="-1"></a><span class="in">```{r apercu}</span></span>
+<span id="cb14-76"><a href="#cb14-76" aria-hidden="true" tabindex="-1"></a><span class="co"># Afficher la structure</span></span>
+<span id="cb14-77"><a href="#cb14-77" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(diamonds)</span>
+<span id="cb14-78"><a href="#cb14-78" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb14-79"><a href="#cb14-79" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-80"><a href="#cb14-80" aria-hidden="true" tabindex="-1"></a><span class="fu">## Statistiques Descriptives</span></span>
+<span id="cb14-81"><a href="#cb14-81" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-82"><a href="#cb14-82" aria-hidden="true" tabindex="-1"></a><span class="in">```{r stats-base}</span></span>
+<span id="cb14-83"><a href="#cb14-83" aria-hidden="true" tabindex="-1"></a><span class="co"># Statistiques du prix</span></span>
+<span id="cb14-84"><a href="#cb14-84" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(diamonds<span class="sc">$</span>price)</span>
+<span id="cb14-85"><a href="#cb14-85" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb14-86"><a href="#cb14-86" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-87"><a href="#cb14-87" aria-hidden="true" tabindex="-1"></a>::: {.callout-note icon="false"}</span>
+<span id="cb14-88"><a href="#cb14-88" aria-hidden="true" tabindex="-1"></a><span class="fu">## 📊 Statistiques Clés du Prix</span></span>
+<span id="cb14-89"><a href="#cb14-89" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-90"><a href="#cb14-90" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Prix Moyen :** <span class="in">`r dollar(mean(diamonds$price))`</span></span>
+<span id="cb14-91"><a href="#cb14-91" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Prix Médian :** <span class="in">`r dollar(median(diamonds$price))`</span></span>
+<span id="cb14-92"><a href="#cb14-92" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Prix Maximum :** <span class="in">`r dollar(max(diamonds$price))`</span></span>
+<span id="cb14-93"><a href="#cb14-93" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Écart-Type :** <span class="in">`r dollar(sd(diamonds$price))`</span></span>
+<span id="cb14-94"><a href="#cb14-94" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb14-95"><a href="#cb14-95" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-96"><a href="#cb14-96" aria-hidden="true" tabindex="-1"></a><span class="in">```{r table-summary}</span></span>
+<span id="cb14-97"><a href="#cb14-97" aria-hidden="true" tabindex="-1"></a><span class="co"># Tableau récapitulatif par Cut</span></span>
+<span id="cb14-98"><a href="#cb14-98" aria-hidden="true" tabindex="-1"></a>diamonds_summary <span class="ot">&lt;-</span> diamonds <span class="sc">%&gt;%</span></span>
+<span id="cb14-99"><a href="#cb14-99" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(cut) <span class="sc">%&gt;%</span></span>
+<span id="cb14-100"><a href="#cb14-100" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb14-101"><a href="#cb14-101" aria-hidden="true" tabindex="-1"></a>    <span class="at">Nombre =</span> <span class="fu">n</span>(),</span>
+<span id="cb14-102"><a href="#cb14-102" aria-hidden="true" tabindex="-1"></a>    <span class="st">`</span><span class="at">Prix Moyen</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">dollar</span>(<span class="fu">mean</span>(price)),</span>
+<span id="cb14-103"><a href="#cb14-103" aria-hidden="true" tabindex="-1"></a>    <span class="st">`</span><span class="at">Prix Médian</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">dollar</span>(<span class="fu">median</span>(price)),</span>
+<span id="cb14-104"><a href="#cb14-104" aria-hidden="true" tabindex="-1"></a>    <span class="st">`</span><span class="at">Carat Moyen</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">round</span>(<span class="fu">mean</span>(carat), <span class="dv">2</span>)</span>
+<span id="cb14-105"><a href="#cb14-105" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb14-106"><a href="#cb14-106" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(<span class="st">`</span><span class="at">Prix Moyen</span><span class="st">`</span>))</span>
+<span id="cb14-107"><a href="#cb14-107" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-108"><a href="#cb14-108" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(diamonds_summary, <span class="at">caption =</span> <span class="st">"Statistiques par Qualité de Coupe"</span>)</span>
+<span id="cb14-109"><a href="#cb14-109" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb14-110"><a href="#cb14-110" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-111"><a href="#cb14-111" aria-hidden="true" tabindex="-1"></a>------------------------------------------------------------------------</span>
+<span id="cb14-112"><a href="#cb14-112" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-113"><a href="#cb14-113" aria-hidden="true" tabindex="-1"></a><span class="fu"># Le Carat : Facteur Dominant du Prix</span></span>
+<span id="cb14-114"><a href="#cb14-114" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-115"><a href="#cb14-115" aria-hidden="true" tabindex="-1"></a>Le **carat** (poids) est la variable ayant l'impact le plus significatif sur le prix.</span>
+<span id="cb14-116"><a href="#cb14-116" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-117"><a href="#cb14-117" aria-hidden="true" tabindex="-1"></a><span class="fu">## Relation Prix vs Carat</span></span>
+<span id="cb14-118"><a href="#cb14-118" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-119"><a href="#cb14-119" aria-hidden="true" tabindex="-1"></a><span class="in">```{r prix-carat}</span></span>
+<span id="cb14-120"><a href="#cb14-120" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(diamonds_sample, <span class="fu">aes</span>(<span class="at">x =</span> carat, <span class="at">y =</span> price)) <span class="sc">+</span></span>
+<span id="cb14-121"><a href="#cb14-121" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.4</span>, <span class="at">color =</span> <span class="st">"#667eea"</span>, <span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb14-122"><a href="#cb14-122" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"loess"</span>, <span class="at">color =</span> <span class="st">"#764ba2"</span>, <span class="at">linewidth =</span> <span class="fl">1.5</span>, <span class="at">se =</span> <span class="cn">TRUE</span>) <span class="sc">+</span></span>
+<span id="cb14-123"><a href="#cb14-123" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> <span class="fu">dollar_format</span>()) <span class="sc">+</span></span>
+<span id="cb14-124"><a href="#cb14-124" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb14-125"><a href="#cb14-125" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Relation entre Prix et Carat"</span>,</span>
+<span id="cb14-126"><a href="#cb14-126" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="fu">paste</span>(<span class="st">"Corrélation:"</span>, <span class="fu">round</span>(<span class="fu">cor</span>(diamonds<span class="sc">$</span>price, diamonds<span class="sc">$</span>carat), <span class="dv">3</span>)),</span>
+<span id="cb14-127"><a href="#cb14-127" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Carat (poids)"</span>,</span>
+<span id="cb14-128"><a href="#cb14-128" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Prix (USD)"</span></span>
+<span id="cb14-129"><a href="#cb14-129" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb14-130"><a href="#cb14-130" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">13</span>)</span>
+<span id="cb14-131"><a href="#cb14-131" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb14-132"><a href="#cb14-132" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-133"><a href="#cb14-133" aria-hidden="true" tabindex="-1"></a>::: {.callout-important icon="false"}</span>
+<span id="cb14-134"><a href="#cb14-134" aria-hidden="true" tabindex="-1"></a><span class="fu">## 🔍 Insight Clé</span></span>
+<span id="cb14-135"><a href="#cb14-135" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-136"><a href="#cb14-136" aria-hidden="true" tabindex="-1"></a>La corrélation entre **Prix** et **Carat** est de **`r round(cor(diamonds$price, diamonds$carat), 3)`**, ce qui indique une relation **très forte et positive**.</span>
+<span id="cb14-137"><a href="#cb14-137" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb14-138"><a href="#cb14-138" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-139"><a href="#cb14-139" aria-hidden="true" tabindex="-1"></a><span class="fu">## Distribution du Carat</span></span>
+<span id="cb14-140"><a href="#cb14-140" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-141"><a href="#cb14-141" aria-hidden="true" tabindex="-1"></a><span class="in">```{r dist-carat}</span></span>
+<span id="cb14-142"><a href="#cb14-142" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(diamonds, <span class="fu">aes</span>(<span class="at">x =</span> carat)) <span class="sc">+</span></span>
+<span id="cb14-143"><a href="#cb14-143" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">50</span>, <span class="at">fill =</span> <span class="st">"#ff9800"</span>, <span class="at">color =</span> <span class="st">"white"</span>, <span class="at">alpha =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
+<span id="cb14-144"><a href="#cb14-144" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">median</span>(diamonds<span class="sc">$</span>carat), </span>
+<span id="cb14-145"><a href="#cb14-145" aria-hidden="true" tabindex="-1"></a>             <span class="at">linetype =</span> <span class="st">"dashed"</span>, <span class="at">color =</span> <span class="st">"red"</span>, <span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb14-146"><a href="#cb14-146" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">x =</span> <span class="fu">median</span>(diamonds<span class="sc">$</span>carat) <span class="sc">+</span> <span class="fl">0.3</span>, <span class="at">y =</span> <span class="dv">8000</span>, </span>
+<span id="cb14-147"><a href="#cb14-147" aria-hidden="true" tabindex="-1"></a>           <span class="at">label =</span> <span class="fu">paste</span>(<span class="st">"Médiane ="</span>, <span class="fu">round</span>(<span class="fu">median</span>(diamonds<span class="sc">$</span>carat), <span class="dv">2</span>)), </span>
+<span id="cb14-148"><a href="#cb14-148" aria-hidden="true" tabindex="-1"></a>           <span class="at">color =</span> <span class="st">"red"</span>, <span class="at">size =</span> <span class="dv">5</span>) <span class="sc">+</span></span>
+<span id="cb14-149"><a href="#cb14-149" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb14-150"><a href="#cb14-150" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Distribution du Poids des Diamants"</span>,</span>
+<span id="cb14-151"><a href="#cb14-151" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"Pics observés autour de 0.3, 0.5, 1.0 et 1.5 carats"</span>,</span>
+<span id="cb14-152"><a href="#cb14-152" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Carat"</span>,</span>
+<span id="cb14-153"><a href="#cb14-153" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Fréquence"</span></span>
+<span id="cb14-154"><a href="#cb14-154" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb14-155"><a href="#cb14-155" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb14-156"><a href="#cb14-156" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-157"><a href="#cb14-157" aria-hidden="true" tabindex="-1"></a>------------------------------------------------------------------------</span>
+<span id="cb14-158"><a href="#cb14-158" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-159"><a href="#cb14-159" aria-hidden="true" tabindex="-1"></a><span class="fu"># Influence des Autres "C"</span></span>
+<span id="cb14-160"><a href="#cb14-160" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-161"><a href="#cb14-161" aria-hidden="true" tabindex="-1"></a><span class="fu">## Qualité de Coupe (Cut)</span></span>
+<span id="cb14-162"><a href="#cb14-162" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-163"><a href="#cb14-163" aria-hidden="true" tabindex="-1"></a><span class="in">```{r boxplot-cut}</span></span>
+<span id="cb14-164"><a href="#cb14-164" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(diamonds, <span class="fu">aes</span>(<span class="at">x =</span> cut, <span class="at">y =</span> price, <span class="at">fill =</span> cut)) <span class="sc">+</span></span>
+<span id="cb14-165"><a href="#cb14-165" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb14-166"><a href="#cb14-166" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_brewer</span>(<span class="at">palette =</span> <span class="st">"Set2"</span>) <span class="sc">+</span></span>
+<span id="cb14-167"><a href="#cb14-167" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> <span class="fu">dollar_format</span>()) <span class="sc">+</span></span>
+<span id="cb14-168"><a href="#cb14-168" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb14-169"><a href="#cb14-169" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Distribution du Prix par Qualité de Coupe"</span>,</span>
+<span id="cb14-170"><a href="#cb14-170" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Qualité de Coupe"</span>,</span>
+<span id="cb14-171"><a href="#cb14-171" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Prix (USD)"</span></span>
+<span id="cb14-172"><a href="#cb14-172" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb14-173"><a href="#cb14-173" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb14-174"><a href="#cb14-174" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.position =</span> <span class="st">"none"</span>,</span>
+<span id="cb14-175"><a href="#cb14-175" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">hjust =</span> <span class="dv">1</span>)</span>
+<span id="cb14-176"><a href="#cb14-176" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb14-177"><a href="#cb14-177" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb14-178"><a href="#cb14-178" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-179"><a href="#cb14-179" aria-hidden="true" tabindex="-1"></a><span class="fu">## Couleur (Color)</span></span>
+<span id="cb14-180"><a href="#cb14-180" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-181"><a href="#cb14-181" aria-hidden="true" tabindex="-1"></a>La couleur est notée de **D (meilleure)** à **J (moins bonne)**.</span>
+<span id="cb14-182"><a href="#cb14-182" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-183"><a href="#cb14-183" aria-hidden="true" tabindex="-1"></a><span class="in">```{r boxplot-color}</span></span>
+<span id="cb14-184"><a href="#cb14-184" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(diamonds, <span class="fu">aes</span>(<span class="at">x =</span> color, <span class="at">y =</span> price, <span class="at">fill =</span> color)) <span class="sc">+</span></span>
+<span id="cb14-185"><a href="#cb14-185" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb14-186"><a href="#cb14-186" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_brewer</span>(<span class="at">palette =</span> <span class="st">"Spectral"</span>, <span class="at">direction =</span> <span class="sc">-</span><span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb14-187"><a href="#cb14-187" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> <span class="fu">dollar_format</span>()) <span class="sc">+</span></span>
+<span id="cb14-188"><a href="#cb14-188" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb14-189"><a href="#cb14-189" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Distribution du Prix par Couleur"</span>,</span>
+<span id="cb14-190"><a href="#cb14-190" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"D = Incolore (meilleur) • J = Jaune pâle"</span>,</span>
+<span id="cb14-191"><a href="#cb14-191" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Couleur"</span>,</span>
+<span id="cb14-192"><a href="#cb14-192" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Prix (USD)"</span></span>
+<span id="cb14-193"><a href="#cb14-193" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb14-194"><a href="#cb14-194" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>)</span>
+<span id="cb14-195"><a href="#cb14-195" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb14-196"><a href="#cb14-196" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-197"><a href="#cb14-197" aria-hidden="true" tabindex="-1"></a><span class="fu">## Pureté (Clarity)</span></span>
+<span id="cb14-198"><a href="#cb14-198" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-199"><a href="#cb14-199" aria-hidden="true" tabindex="-1"></a><span class="in">```{r boxplot-clarity}</span></span>
+<span id="cb14-200"><a href="#cb14-200" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(diamonds, <span class="fu">aes</span>(<span class="at">x =</span> clarity, <span class="at">y =</span> price, <span class="at">fill =</span> clarity)) <span class="sc">+</span></span>
+<span id="cb14-201"><a href="#cb14-201" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb14-202"><a href="#cb14-202" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_brewer</span>(<span class="at">palette =</span> <span class="st">"Accent"</span>) <span class="sc">+</span></span>
+<span id="cb14-203"><a href="#cb14-203" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> <span class="fu">dollar_format</span>()) <span class="sc">+</span></span>
+<span id="cb14-204"><a href="#cb14-204" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb14-205"><a href="#cb14-205" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Distribution du Prix par Pureté"</span>,</span>
+<span id="cb14-206"><a href="#cb14-206" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Pureté (Clarity)"</span>,</span>
+<span id="cb14-207"><a href="#cb14-207" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Prix (USD)"</span></span>
+<span id="cb14-208"><a href="#cb14-208" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb14-209"><a href="#cb14-209" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb14-210"><a href="#cb14-210" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.position =</span> <span class="st">"none"</span>,</span>
+<span id="cb14-211"><a href="#cb14-211" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">hjust =</span> <span class="dv">1</span>)</span>
+<span id="cb14-212"><a href="#cb14-212" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb14-213"><a href="#cb14-213" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb14-214"><a href="#cb14-214" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-215"><a href="#cb14-215" aria-hidden="true" tabindex="-1"></a>------------------------------------------------------------------------</span>
+<span id="cb14-216"><a href="#cb14-216" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-217"><a href="#cb14-217" aria-hidden="true" tabindex="-1"></a><span class="fu"># Analyses Approfondies</span></span>
+<span id="cb14-218"><a href="#cb14-218" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-219"><a href="#cb14-219" aria-hidden="true" tabindex="-1"></a><span class="fu">## Top 10 Diamants les Plus Chers</span></span>
+<span id="cb14-220"><a href="#cb14-220" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-221"><a href="#cb14-221" aria-hidden="true" tabindex="-1"></a><span class="in">```{r top-expensive}</span></span>
+<span id="cb14-222"><a href="#cb14-222" aria-hidden="true" tabindex="-1"></a>top_diamants <span class="ot">&lt;-</span> diamonds <span class="sc">%&gt;%</span></span>
+<span id="cb14-223"><a href="#cb14-223" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(price)) <span class="sc">%&gt;%</span></span>
+<span id="cb14-224"><a href="#cb14-224" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(carat, cut, color, clarity, price) <span class="sc">%&gt;%</span></span>
+<span id="cb14-225"><a href="#cb14-225" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">10</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb14-226"><a href="#cb14-226" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb14-227"><a href="#cb14-227" aria-hidden="true" tabindex="-1"></a>    <span class="at">Rang =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>,</span>
+<span id="cb14-228"><a href="#cb14-228" aria-hidden="true" tabindex="-1"></a>    <span class="at">Prix =</span> <span class="fu">dollar</span>(price)</span>
+<span id="cb14-229"><a href="#cb14-229" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb14-230"><a href="#cb14-230" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Rang, carat, cut, color, clarity, Prix)</span>
+<span id="cb14-231"><a href="#cb14-231" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-232"><a href="#cb14-232" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(top_diamants, <span class="at">caption =</span> <span class="st">"Les 10 Diamants les Plus Chers"</span>)</span>
+<span id="cb14-233"><a href="#cb14-233" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb14-234"><a href="#cb14-234" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-235"><a href="#cb14-235" aria-hidden="true" tabindex="-1"></a><span class="fu">## Matrice de Corrélation</span></span>
+<span id="cb14-236"><a href="#cb14-236" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-237"><a href="#cb14-237" aria-hidden="true" tabindex="-1"></a><span class="in">```{r correlation}</span></span>
+<span id="cb14-238"><a href="#cb14-238" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculer corrélations</span></span>
+<span id="cb14-239"><a href="#cb14-239" aria-hidden="true" tabindex="-1"></a>cor_vars <span class="ot">&lt;-</span> diamonds <span class="sc">%&gt;%</span></span>
+<span id="cb14-240"><a href="#cb14-240" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(carat, depth, table, price, x, y, z) <span class="sc">%&gt;%</span></span>
+<span id="cb14-241"><a href="#cb14-241" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cor</span>()</span>
+<span id="cb14-242"><a href="#cb14-242" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-243"><a href="#cb14-243" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualiser</span></span>
+<span id="cb14-244"><a href="#cb14-244" aria-hidden="true" tabindex="-1"></a><span class="fu">corrplot</span>(cor_vars, </span>
+<span id="cb14-245"><a href="#cb14-245" aria-hidden="true" tabindex="-1"></a>         <span class="at">method =</span> <span class="st">"color"</span>, </span>
+<span id="cb14-246"><a href="#cb14-246" aria-hidden="true" tabindex="-1"></a>         <span class="at">type =</span> <span class="st">"upper"</span>,</span>
+<span id="cb14-247"><a href="#cb14-247" aria-hidden="true" tabindex="-1"></a>         <span class="at">tl.col =</span> <span class="st">"black"</span>,</span>
+<span id="cb14-248"><a href="#cb14-248" aria-hidden="true" tabindex="-1"></a>         <span class="at">tl.cex =</span> <span class="fl">1.2</span>,</span>
+<span id="cb14-249"><a href="#cb14-249" aria-hidden="true" tabindex="-1"></a>         <span class="at">addCoef.col =</span> <span class="st">"black"</span>,</span>
+<span id="cb14-250"><a href="#cb14-250" aria-hidden="true" tabindex="-1"></a>         <span class="at">number.cex =</span> <span class="dv">1</span>,</span>
+<span id="cb14-251"><a href="#cb14-251" aria-hidden="true" tabindex="-1"></a>         <span class="at">col =</span> <span class="fu">colorRampPalette</span>(<span class="fu">c</span>(<span class="st">"#6D9EC1"</span>, <span class="st">"white"</span>, <span class="st">"#E46726"</span>))(<span class="dv">200</span>),</span>
+<span id="cb14-252"><a href="#cb14-252" aria-hidden="true" tabindex="-1"></a>         <span class="at">title =</span> <span class="st">"Corrélations entre Variables Numériques"</span>,</span>
+<span id="cb14-253"><a href="#cb14-253" aria-hidden="true" tabindex="-1"></a>         <span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">2</span>, <span class="dv">0</span>))</span>
+<span id="cb14-254"><a href="#cb14-254" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb14-255"><a href="#cb14-255" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-256"><a href="#cb14-256" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip icon="false"}</span>
+<span id="cb14-257"><a href="#cb14-257" aria-hidden="true" tabindex="-1"></a><span class="fu">## 💡 Observations</span></span>
+<span id="cb14-258"><a href="#cb14-258" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-259"><a href="#cb14-259" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Carat** a la corrélation la plus forte avec le prix (<span class="in">`r round(cor(diamonds$price, diamonds$carat), 3)`</span>)</span>
+<span id="cb14-260"><a href="#cb14-260" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Les dimensions **x, y, z** sont fortement corrélées entre elles (logique : taille du diamant)</span>
+<span id="cb14-261"><a href="#cb14-261" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Depth** et **table** ont peu d'impact sur le prix</span>
+<span id="cb14-262"><a href="#cb14-262" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb14-263"><a href="#cb14-263" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-264"><a href="#cb14-264" aria-hidden="true" tabindex="-1"></a><span class="fu">## Top Combinaisons Cut + Color</span></span>
+<span id="cb14-265"><a href="#cb14-265" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-266"><a href="#cb14-266" aria-hidden="true" tabindex="-1"></a><span class="in">```{r top-combinations}</span></span>
+<span id="cb14-267"><a href="#cb14-267" aria-hidden="true" tabindex="-1"></a>top_combo <span class="ot">&lt;-</span> diamonds <span class="sc">%&gt;%</span></span>
+<span id="cb14-268"><a href="#cb14-268" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(cut, color) <span class="sc">%&gt;%</span></span>
+<span id="cb14-269"><a href="#cb14-269" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb14-270"><a href="#cb14-270" aria-hidden="true" tabindex="-1"></a>    <span class="st">`</span><span class="at">Prix Moyen</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">dollar</span>(<span class="fu">mean</span>(price)),</span>
+<span id="cb14-271"><a href="#cb14-271" aria-hidden="true" tabindex="-1"></a>    <span class="at">Nombre =</span> <span class="fu">n</span>(),</span>
+<span id="cb14-272"><a href="#cb14-272" aria-hidden="true" tabindex="-1"></a>    <span class="at">.groups =</span> <span class="st">'drop'</span></span>
+<span id="cb14-273"><a href="#cb14-273" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb14-274"><a href="#cb14-274" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(<span class="st">`</span><span class="at">Prix Moyen</span><span class="st">`</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb14-275"><a href="#cb14-275" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">10</span>)</span>
+<span id="cb14-276"><a href="#cb14-276" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-277"><a href="#cb14-277" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(top_combo, <span class="at">caption =</span> <span class="st">"Top 10 Combinaisons Cut-Color par Prix Moyen"</span>)</span>
+<span id="cb14-278"><a href="#cb14-278" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb14-279"><a href="#cb14-279" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-280"><a href="#cb14-280" aria-hidden="true" tabindex="-1"></a>------------------------------------------------------------------------</span>
+<span id="cb14-281"><a href="#cb14-281" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-282"><a href="#cb14-282" aria-hidden="true" tabindex="-1"></a><span class="fu"># Conclusions &amp; Recommandations</span></span>
+<span id="cb14-283"><a href="#cb14-283" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-284"><a href="#cb14-284" aria-hidden="true" tabindex="-1"></a>::: {.callout-important icon="false"}</span>
+<span id="cb14-285"><a href="#cb14-285" aria-hidden="true" tabindex="-1"></a><span class="fu">## 🎯 Insights Clés</span></span>
+<span id="cb14-286"><a href="#cb14-286" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-287"><a href="#cb14-287" aria-hidden="true" tabindex="-1"></a><span class="ss">1.  </span>**Le Carat est ROI** : Corrélation de <span class="in">`r round(cor(diamonds$price, diamonds$carat), 3)`</span> avec le prix</span>
+<span id="cb14-288"><a href="#cb14-288" aria-hidden="true" tabindex="-1"></a><span class="ss">2.  </span>**Cut "Ideal" domine** : <span class="in">`r round(100 * mean(diamonds$cut == "Ideal"), 1)`</span>% des diamants</span>
+<span id="cb14-289"><a href="#cb14-289" aria-hidden="true" tabindex="-1"></a><span class="ss">3.  </span>**Couleurs D-F** : Premium price pour qualité supérieure</span>
+<span id="cb14-290"><a href="#cb14-290" aria-hidden="true" tabindex="-1"></a><span class="ss">4.  </span>**Seuil psychologique** : Pics de demande à 0.5, 1.0, 1.5 carats</span>
+<span id="cb14-291"><a href="#cb14-291" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb14-292"><a href="#cb14-292" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-293"><a href="#cb14-293" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip icon="false"}</span>
+<span id="cb14-294"><a href="#cb14-294" aria-hidden="true" tabindex="-1"></a><span class="fu">## 💼 Recommandations Stratégiques</span></span>
+<span id="cb14-295"><a href="#cb14-295" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-296"><a href="#cb14-296" aria-hidden="true" tabindex="-1"></a><span class="fu">### Pour le Pricing</span></span>
+<span id="cb14-297"><a href="#cb14-297" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-298"><a href="#cb14-298" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Appliquer un premium de **15-20%** pour diamants <span class="sc">\&gt;</span>1 carat</span>
+<span id="cb14-299"><a href="#cb14-299" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Valoriser combinaisons **Ideal Cut + Color D-F**</span>
+<span id="cb14-300"><a href="#cb14-300" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-301"><a href="#cb14-301" aria-hidden="true" tabindex="-1"></a><span class="fu">### Pour l'Inventaire</span></span>
+<span id="cb14-302"><a href="#cb14-302" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-303"><a href="#cb14-303" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Prioriser stock de **0.9-1.1 carats** (demande forte)</span>
+<span id="cb14-304"><a href="#cb14-304" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Maintenir diversité de **Clarity** (SI1-VS2 = meilleur rapport qualité-prix)</span>
+<span id="cb14-305"><a href="#cb14-305" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-306"><a href="#cb14-306" aria-hidden="true" tabindex="-1"></a><span class="fu">### Pour le Marketing</span></span>
+<span id="cb14-307"><a href="#cb14-307" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-308"><a href="#cb14-308" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Communiquer sur les **4C** avec focus sur Carat</span>
+<span id="cb14-309"><a href="#cb14-309" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Proposer gamme "Premium" : Ideal + D-F + VS1+</span>
+<span id="cb14-310"><a href="#cb14-310" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb14-311"><a href="#cb14-311" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-312"><a href="#cb14-312" aria-hidden="true" tabindex="-1"></a>------------------------------------------------------------------------</span>
+<span id="cb14-313"><a href="#cb14-313" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-314"><a href="#cb14-314" aria-hidden="true" tabindex="-1"></a>::: {style="text-align: center; padding: 40px; background: #f8f9fa; border-radius: 10px; margin-top: 40px;"}</span>
+<span id="cb14-315"><a href="#cb14-315" aria-hidden="true" tabindex="-1"></a><span class="fu"># Merci pour votre attention ! 💎</span></span>
+<span id="cb14-316"><a href="#cb14-316" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-317"><a href="#cb14-317" aria-hidden="true" tabindex="-1"></a>**Projet réalisé par Abir Hamda**</span>
+<span id="cb14-318"><a href="#cb14-318" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-319"><a href="#cb14-319" aria-hidden="true" tabindex="-1"></a>*Analyse Descriptive • R • Quarto*</span>
+<span id="cb14-320"><a href="#cb14-320" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-321"><a href="#cb14-321" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">📧 Contact</span><span class="co">](mailto:votre.email@exemple.com)</span> • <span class="co">[</span><span class="ot">🔗 GitHub</span><span class="co">](https://github.com/)</span></span>
+<span id="cb14-322"><a href="#cb14-322" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb14-323"><a href="#cb14-323" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-324"><a href="#cb14-324" aria-hidden="true" tabindex="-1"></a>------------------------------------------------------------------------</span>
+<span id="cb14-325"><a href="#cb14-325" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-326"><a href="#cb14-326" aria-hidden="true" tabindex="-1"></a><span class="fu"># Annexes {.appendix}</span></span>
+<span id="cb14-327"><a href="#cb14-327" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-328"><a href="#cb14-328" aria-hidden="true" tabindex="-1"></a><span class="fu">## Code Source Complet</span></span>
+<span id="cb14-329"><a href="#cb14-329" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-330"><a href="#cb14-330" aria-hidden="true" tabindex="-1"></a>L'ensemble du code utilisé pour cette analyse est disponible sur GitHub.</span>
+<span id="cb14-331"><a href="#cb14-331" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-332"><a href="#cb14-332" aria-hidden="true" tabindex="-1"></a><span class="fu">## Méthodologie</span></span>
+<span id="cb14-333"><a href="#cb14-333" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-334"><a href="#cb14-334" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Outil** : R 4.x + RStudio</span>
+<span id="cb14-335"><a href="#cb14-335" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Packages** : ggplot2, dplyr, corrplot</span>
+<span id="cb14-336"><a href="#cb14-336" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Dataset** : diamonds (ggplot2)</span>
+<span id="cb14-337"><a href="#cb14-337" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Échantillonnage** : 10 000 observations pour certains graphiques (performance)</span>
+<span id="cb14-338"><a href="#cb14-338" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-339"><a href="#cb14-339" aria-hidden="true" tabindex="-1"></a><span class="fu">## Références</span></span>
+<span id="cb14-340"><a href="#cb14-340" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-341"><a href="#cb14-341" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Documentation R : <span class="co">[</span><span class="ot">CRAN</span><span class="co">](https://cran.r-project.org/)</span></span>
+<span id="cb14-342"><a href="#cb14-342" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>ggplot2 : <span class="co">[</span><span class="ot">tidyverse.org</span><span class="co">](https://ggplot2.tidyverse.org/)</span></span>
+<span id="cb14-343"><a href="#cb14-343" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Quarto : <span class="co">[</span><span class="ot">quarto.org</span><span class="co">](https://quarto.org/)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 
 
 
 
+<script src="rapport_diamants_files/libs/quarto-html/zenscroll-min.js"></script>
 </body></html>
